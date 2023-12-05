@@ -418,12 +418,12 @@
        This version dated \@date%
      }\hspace*{1cm}}}%
      \textcolor{LiveCoMSMediumGrey}{\rule{\textwidth}{2pt}}
-     \vskip16pt
+     \vskip8pt
      \textcolor{LiveCoMSLightBlue}{\large\bfseries\abstractname\space}
   }{%
      \vskip8pt
      \textcolor{LiveCoMSMediumGrey}{\rule{\textwidth}{2pt}}
-     \vskip16pt
+     \vskip8pt
   }
   \twocolumn[%
     \protecting{%\begin{minipage}[b]{3cm}
@@ -440,7 +440,7 @@
 
 \renewcommand{\maketitle}{%
   \vskip36pt%
-  {\color{LiveCoMSDarkBlue}\raggedright\bfseries\fontsize{22}{27}\selectfont \@title\par}%
+  {\color{LiveCoMSDarkBlue}\raggedright\bfseries\fontsize{21}{26}\selectfont \@title\par}%
   \vskip16pt
   {\@author\par}
   \vskip8pt
