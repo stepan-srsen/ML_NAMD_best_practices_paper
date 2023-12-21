@@ -6,14 +6,14 @@ Exploring molecular excited states holds immense significance across organic che
 
 ## List of Authors
 
-- Carolin Müller - Faculty of Sciences, Friedrich-Alexander University of Erlangen-Nürnberg, Universitätsstraße 40, 91054 Erlangen, Germany
+- Carolin Müller - Computer Chemistry Center, Friedrich-Alexander University of Erlangen-Nuremberg, Nägelsbachstraße, 91052 Erlangen, Germany
 - Brigitta Bachmair - Research Platform on Accelerating Photoreaction Discovery (ViRAPID), University of Vienna, 1090 Vienna, Austria; Vienna Doctoral School in Chemistry (DoSChem), University of Vienna, Währinger Straße 42, 1090 Vienna, Austria
-- Rachel Crespo-Otero - Department of Chemistry, University College London, 20 Gordon Street, London, UK, WC1H 0AJ
+- Rachel Crespo-Otero - Department of Chemistry, University College London, 20 Gordon Street, London, WC1H 0AJ, UK
 - Jingbai Li - Hoffmann Institute of Advanced Materials, Shenzhen Polytechnic University, 7098 Liuxian Boulevard, Shenzhen, Guangdong 518055, P. R. China
 - Sascha Mausenberger - Vienna Doctoral School in Chemistry (DoSChem), University of Vienna, Währinger Straße 42, 1090 Vienna, Austria; Institute of Theoretical Chemistry, Faculty of Chemistry, University of Vienna, Währinger Str. 17, 1090 Wien, Austria
 - Max Pinheiro Jr - Aix Marseille University, CNRS, ICR, Marseille, France
 - Štěpán Sršeň - Institute of Theoretical Chemistry, Faculty of Chemistry, University of Vienna, Währinger Str. 17, 1090 Wien, Austria; Department of Physical Chemistry, University of Chemistry and Technology, Technická 5, 162 28 Prague, Czech Republic
-- Graham Worth - Department of Chemistry, University College London, 20 Gordon Street, London, UK, WC1H 0AJ
+- Graham Worth - Department of Chemistry, University College London, 20 Gordon Street, London, WC1H 0AJ, UK
 - Steven A. Lopez - Department of Chemistry & Chemical Biology, Northeastern University, 805 Columbus Avenue, Boston, MA, 02120 USA
 - Julia Westermayr - Faculty of Chemistry and Mineralogy, University of Leipzig, Johannisallee 29, 04103 Leipzig, Germany; Center for Scalable Data Analytics and Artificial Intelligence (ScaDS.AI), Dresden/Leipzig,
 Germany
