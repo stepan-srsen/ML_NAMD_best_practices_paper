@@ -29,3 +29,4 @@ This paper is being developed as a living document, open to changes from the com
 ## List of Released Versions
 <!-- update this when you decide to release a version either by preprint or when submitted to LiveCoMS-->
 - v0.1: Initial GitHub version
+- v0.2: LiveCoMS submission version, minor changes

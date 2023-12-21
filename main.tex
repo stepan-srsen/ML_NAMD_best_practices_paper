@@ -24,7 +24,7 @@
 %%% IMPORTANT USER CONFIGURATION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\versionnumber}{0.1}  % you should update the minor version number in preprints and major version number of submissions.
+\newcommand{\versionnumber}{0.2}  % you should update the minor version number in preprints and major version number of submissions.
 % Do not add a newline in the next command, no matter how long the repository name is, as it will break the link in the PDF.
 \newcommand{\githubrepository}{\url{https://github.com/stepan-srsen/ML_NAMD_best_practices_paper}}  %this should be the main github repository for this article.
 
@@ -54,10 +54,10 @@
 % \affil[2]{Institution 2}
 
 % \affil[1]{Physics and Materials Science Research Unit, University of Luxembourg, 1511 Luxembourg, Luxembourg}
-\affil[1]{Faculty of Sciences, Friedrich-Alexander University of Erlangen-Nürnberg, Universitätsstraße 40, 91054 Erlangen, Germany}
+\affil[1]{Computer Chemistry Center, Friedrich-Alexander University of Erlangen-Nuremberg, Nägelsbachstraße, 91052 Erlangen, Germany}
 \affil[2]{Research Platform on Accelerating Photoreaction Discovery (ViRAPID), University of Vienna, 1090 Vienna, Austria}
 \affil[3]{Vienna Doctoral School in Chemistry (DoSChem), University of Vienna, Währinger Straße 42, 1090 Vienna, Austria}
-\affil[4]{Department of Chemistry, University College London, 20 Gordon Street, London, UK, WC1H 0AJ}
+\affil[4]{Department of Chemistry, University College London, 20 Gordon Street, London, WC1H 0AJ, UK}
 \affil[5]{Hoffmann Institute of Advanced Materials, Shenzhen Polytechnic University, 7098 Liuxian Boulevard, Shenzhen, Guangdong 518055, P. R. China}
 \affil[6]{Institute of Theoretical Chemistry, Faculty of Chemistry, University of Vienna, Währinger Str. 17, 1090 Wien, Austria}
 \affil[7]{Aix Marseille University, CNRS, ICR, Marseille, France}
@@ -329,7 +329,7 @@ A user would ideally use one pre-trained ML model for accurate NAMD of another c
 
 The transferability of pre-trained models throughout the chemical compound space represents a major problem for ML applications to excited-state dynamics. While classical force fields were used for ground-state dynamics long before the introduction of ML potentials, the same does not apply to excited states. Global representations are more efficient for the properties used in NAMD, but such models are less transferable throughout the chemical compound space than local descriptors. Even state-of-the-art studies struggle to obtain accurate predictions even when training ML models specifically for one system \cite{RN105}.
 
-\subsection{Dibatization}
+\subsection{Diabatization}
 \label{sec:diabatization}
 
 Electronic states and corresponding energies, usually from electronic structure codes, are in the so-called adiabatic representation. These are ordered by energy, and two states of the same multiplicity and symmetry never cross. Instead, they form a conical intersection, a seam of degenerate geometries. The dimensionality of such a seam is smaller by two than the system's dimensionality in internal coordinates. For example, the seam consists of just one point for a 2D system, as plotted in Figure \ref{fig:CI}.
@@ -448,27 +448,6 @@ Time plots are probably the most intuitive approach because they demonstrate how
 Tslearn is a Python library designed for time series analysis \cite{RN13}. It provides many tools and algorithms for analyzing, modeling, and visualizing time series data. Some of the key features and techniques offered by tslearn include time series clustering and time series classification, which enable clustering and classification of time series into predefined classes or categories, respectively, time series forecasting, or time series distance metrics to allow for quantification of similarities and dissimilarities between time series sequences.
 
 
-
-\section{Perspectives and conclusion}
-
-\subsection{Quantum Dynamics}
-
-Machine learning tools are being developed that help accelerate and enable the running and analysis of NAMD using trajectory-based methods such as TSH. Full quantum dynamics methods that propagate a delocalized wavepacket also stand to gain much from these techniques. However, complications resulting from their computationally intensive nature point towards slower advances in this subfield. 
-
-Full quantum dynamics methods solve the time-dependent Schrödinger equation by propagating the complete wavepacket on a grid. The Multi-configuration Time-Dependent Hartree (MCTDH) method is an example of this approach \cite{RN87}. The surface hopping methods require accurate potential surfaces and NACs, which can be provided in principle by the techniques described in section \ref{sec:fitting} above. Gradients are not required, only energies. Unlike trajectory-based methods, however, global surfaces are needed. A diabatic representation is required (section \ref{sec:diabatization}). While the surfaces only need to be accurately described in the region of space occupied by the wavepacket, their delocalized nature means that it is sensitive to “holes” in the potential, i.e., regions where the potential drops to large negative energies due to poor fitting. A likely problem is if sufficient data is not used when learning surfaces, particularly at the boundaries of the space to be covered.
-
-One can provide the data samples by using the surface hopping data. However, the classical nature of these trajectories may mean that they do not sample the full space needed to describe the wavepacket. Gaussian wavepacket methods, such as Multiple Spawning \cite{RN86} or vMCG \cite{RN9}, may provide the answer by collecting data along trajectories that can be related directly to the wavepacket motion. This is in particular for the case with vMCG where the trajectories are not classical and spread faster to cover the needed phase space. vMCG has been shown to provide the points for Shepard Interpolated surfaces during direct dynamics simulations \cite{RN40, RN8} and use more advanced sampling techniques in the GROW methodology \cite{RN7}. More recently, it has been used with Gaussian Process Regression to learn the potentials for MCTDH calculations \cite{RN6}. However, the latter simulations also showed the challenges as many points were required for accurate surfaces.
-
-ML techniques can take a complicated multi-dimensional potential function and put it in the form required for efficient quantum dynamics simulations. An ongoing challenge is the high computational cost of multi-dimensional integrals; the potential must be in a “sum-of-products” form. The sum-of-products formalism is written as a sum of terms comprising low-dimensional functions multiplied together. NNs are suitable for this \cite{RN5, RN4}, but have only been applied to small systems.
-
-More and more research is directed towards post-processing (section \ref{sec:postprocessing}). Unlike surface hopping, which gives easily visualizable results with chemical structures moving along trajectories, wavepackets have all the information in a complex multi-dimensional function. Extracting trajectories of molecules evolving in time across excited- and ground-state PESs would help to create unprecedented knowledge of molecular excited states. Sampling and clustering techniques (sections \ref{sec:clustering} and \ref{sec:timeclustering}) to find the significant regions are useful, but visualizing correlations is needed to demonstrate how wavepacket components evolve coherently.
-
-\subsection{Final Notes}
-
-ML for excited states is much less explored, unlike ML for ground-state molecular properties. While ML ground-state potential energy surfaces can be obtained with high accuracy, errors for fitting excited-state properties are generally higher. The benefit of ML potentials that give very low errors with respect to QM methods, as it is often discussed in ground-state simulations \cite{RN127, RN95, Schutt21, RN126, RN93}, provide record-setting timescales for NAMD simulations.
-
-A major challenge that remains to be solved is transferability. Notably, the number and character of electronic states within a certain energy range can vary dramatically even between seemingly similar molecules.5 ML offers the possibility to carry out many hundreds of NAMD trajectories that are needed to achieve statistically significant results. Therefore, active learning techniques are often indispensable when carrying out ML-driven NAMD. In addition, the high amount of data produced by ML-driven NAMD will likely require other advanced ML-based methods for postprocessing and analysis in the future. The benefit of using equivariant features in ML for fitting potential energy surfaces and properties thereof is in its infancy. Much work is still needed to push this field forward and benchmark data sets are required to allow for developing and testing new ML methods for excited states. Efforts in the future should thus be further devoted to data set creation in addition to ML development and testing. 
-
 \clearpage
 
 %Here we use a full-page checklist with multiple sections, so it will appear on a separate page of the sample PDF.
@@ -491,24 +470,24 @@ A major challenge that remains to be solved is transferability. Notably, the num
 
 \begin{checklist}{Pre-processing}
 \begin{itemize}
-\item Before starting confirm suitability of using machine learning potentials --- does the project at hand require extensive nonadiabatic dynamics simulation?
+\item Confirm the suitability of machine learning potentials before starting --- does the project at hand require extensive nonadiabatic dynamics simulation?
 \end{itemize}
 
 \textbf{Selection of the NAMD algorithm and electronic structure method}
 \begin{itemize}
-\item Ensure sufficient accuracy of the method.
+\item Ensure sufficient accuracy of the method (\textit{e.g.} in comparison to experimental data).
 \item Ensure suitability for the chemical system at hand.
-\item Note that the NAMD algorithm largely determines the quantities to be learned (e.g. trajectory surface hopping (TSH) methods might require nonadiabatic coupling (NAC) vectors or spin-orbit couplings (SOCs) in addition to energies and forces (Section~\ref{sec:surfacehop})).
+\item Note that the NAMD algorithm largely determines the quantities to be learned (e.g. TSH methods might require NACs or SOCs in addition to energies and forces (Section~\ref{sec:surfacehop})).
 Thus, ensure that the electronic structure code to be used provides all necessary quantities for the NAMD simulation.
-\item Ensure viable computational cost of the electronic structure method (Section~\ref{sec:elstructure}) (alternatively consider employing $\Delta$ML or transfer learning between chemical methods).
+\item Ensure viable computational cost of the electronic structure method (Section~\ref{sec:elstructure}) or alternatively, consider employing $\Delta$ML or transfer learning between chemical methods.
 \end{itemize}
 
 \textbf{Obtaining training data}
 \begin{itemize}
-\item For data from trajectories (e.g. trajectory surface hopping (TSH) trajectories) keep in mind, that the initial conditions generated have a large impact on the dynamics and thus the conformational space available for training (Section~\ref{sec:initcond}).
-\item Sample sufficient structures near degenerate regions (beyond the even sampling from trajectories) (Section~\ref{sec:trajdatachoice})).
-\item Do not miss any quantities. Oftentimes in TSH simulations not all, but only the required partial gradients and coupling terms are computed in each time step (Section~\ref{sec:energyandgradients}).
-\item Keep in mind, that an undersized initial dataset size can later be extended via active learning approaches.
+\item For trajectory-based methods, keep in mind that the generated initial conditions have a large impact on the dynamics and thus the conformational space available for training (Section~\ref{sec:initcond}).
+\item Sample a sufficient number of structures near degenerate regions beyond even sampling of trajectories (Section~\ref{sec:trajdatachoice}).
+\item Do not miss any quantities. Oftentimes in TSH simulations not all, but only the required partial gradients and coupling terms are computed in each time step (Sections \ref{sec:energyandgradients} and \ref{sec:couplings}).
+\item Keep in mind that an undersized initial dataset size can be extended via active learning approaches.
 \end{itemize}
 \end{checklist}
 
@@ -520,7 +499,7 @@ Thus, ensure that the electronic structure code to be used provides all necessar
 \item Choose on individual basis.
 \begin{itemize}
     \item Kernel methods (KRR, GPs, SVM, \dots; see Section~\ref{sec:kernel}) are more suitable for small data (<2000 data points).
-    \item Neural networks (see Section~\ref{sec:nn}) perform better for big data.
+    \item Neural networks (Section~\ref{sec:nn}) perform better for big data.
 \end{itemize}
 \item Consider the available packages.
 \begin{itemize}
@@ -531,9 +510,9 @@ Thus, ensure that the electronic structure code to be used provides all necessar
 
 \textbf{Choice of descriptor}
 \begin{itemize}
-\item Note that the descriptor is limited by the model and program package chosen (Section~\ref{sec:repre}).
+\item Note that the descriptors are limited by the model and program package chosen (Section~\ref{sec:repre}).
 \item Ensure that the representation possesses basic invariances and equivariances.
-\item Consider the system (size) when choosing the representation (see Section~\ref{sec:kernelrep} for global and local representations for kernel methods).
+\item Consider the system (size) when choosing the representation (see Section~\ref{sec:kernelrep} for global and local representations within kernel methods).
 \item When opting for NNs: decide between fixed and learned representations (Section~\ref{sec:nnrep}).
 \end{itemize}
 
@@ -546,7 +525,7 @@ Thus, ensure that the electronic structure code to be used provides all necessar
 
 \textbf{Additional challenges}
 \begin{itemize}
-\item Recognize the phase problem of the coupling terms (see Section~\ref{sec:modeltrain}):%(the arbitrary phase factor of the wave function leads to arbitrary signs of coupling terms (NAC data))
+\item Recognize the phase problem of the coupling terms (Section~\ref{sec:modeltrain}):%(the arbitrary phase factor of the wave function leads to arbitrary signs of coupling terms (NAC data))
 \begin{itemize}
 \item Correct all phases in advance with the wave function overlap technique.
 \item OR: Account for the phases during training (via a phaseless loss function or double-valued properties).
@@ -555,15 +534,15 @@ Thus, ensure that the electronic structure code to be used provides all necessar
 \begin{itemize}
 \item Consider learning in diabatic representation for smooth quantities 
 (Section~\ref{sec:diabatization}).
-\item Consider learning NACs multiplied with the energy gap to alleviate the energy gap sensitivity (discontinuities at crossing regions are an ongoing challenge), Section~\ref{sec:modeltrain}).
+\item Consider learning NACs multiplied with the energy gap to alleviate the energy gap sensitivity (discontinuities at crossing regions are an ongoing challenge; see Section~\ref{sec:modeltrain}).
 \end{itemize}
-\item ML-model transferability in NAMD is currently still limited (see Section~\ref{sec:transferability}).
+\item Transferability of NAMD ML models is currently still limited (Section~\ref{sec:transferability}).
 \end{itemize}
 
 \textbf{Evaluation of the ML model}
 \begin{itemize}
-\item Always evaluate your trained model.
-\item Use an active learning approach to assure reliability when employing the ML model (see Section~\ref{sec:activelearn}).
+\item Always evaluate the performance of your trained model.
+\item Use active learning to assure reliability when employing the ML model (Section~\ref{sec:activelearn}).
 \end{itemize}
 \end{checklist}
 
@@ -571,18 +550,18 @@ Thus, ensure that the electronic structure code to be used provides all necessar
 
 \begin{checklist}{Post-processing}
 \begin{itemize}
-\item Check for missing values and outliers before further evaluation
+\item Check for missing values and outliers before further processing
 \item Choose features and an adequate representation for data-driven analyses.
 \begin{itemize}
 \item Ensure intuitive representations for better interpretability.
-\item Scale the data to avoid biases, especially when using various different data quantities (e.g. atomic distances and angles) (Section~\ref{sec:preparepostprocess}).
+\item Scale the data to avoid biases, especially when using different data quantities such as atomic distances and angles (Section~\ref{sec:preparepostprocess}).
 \end{itemize}
 \end{itemize}
 \textbf{Selection of algorithms for NAMD data analysis}
 \begin{itemize}
-\item Employ dimensionality reduction algorithms to obtain the most relevant features (via e.g. PCA, MDS, \dots; see Section~\ref{sec:dimred}). \\(Further note, that employing such algorithms is also relevant in the context of wave function propagation methods where the cost impedes the use of full dimensionality).
-\item Use point-wise clustering schemes to identify patterns (such as during the NAMD frequently visited regions in phase space) (via e.g. DBSCAN, agglomerative clustering, \dots; see Section~\ref{sec:clustering}).
-\item Use time-series clustering to find patterns in the dynamical behaviour and obtain typical trajectories (see Section~\ref{sec:timeclustering}).
+\item Employ dimensionality reduction algorithms to obtain the most relevant features (via e.g. PCA, MDS, \dots; see Section~\ref{sec:dimred}). \\(Further note that employing such algorithms is also relevant in the context of wave function propagation methods where the cost impedes the use of full dimensionality.)
+\item Use point-wise clustering schemes to identify patterns (such as frequently visited regions in phase space) (via e.g. DBSCAN, agglomerative clustering, \dots; see Section~\ref{sec:clustering}).
+\item Use time-series clustering to find patterns in the dynamical behaviour and obtain typical trajectories (Section~\ref{sec:timeclustering}).
 \item Visualise the outcome of the data analysis for further interpretation.
 \end{itemize}
 \end{checklist}
@@ -590,6 +569,27 @@ Thus, ensure that the electronic structure code to be used provides all necessar
 \end{Checklists*}
 
 \clearpage
+\section{Perspectives and conclusion}
+
+\subsection{Quantum Dynamics}
+
+Machine learning tools are being developed that help accelerate and enable the running and analysis of NAMD using trajectory-based methods such as TSH. Full quantum dynamics methods that propagate a delocalized wavepacket also stand to gain much from these techniques. However, complications resulting from their computationally intensive nature point towards slower advances in this subfield. 
+
+Full quantum dynamics methods solve the time-dependent Schrödinger equation by propagating the complete wavepacket on a grid. The Multi-configuration Time-Dependent Hartree (MCTDH) method is an example of this approach \cite{RN87}. The surface hopping methods require accurate potential surfaces and NACs, which can be provided in principle by the techniques described in section \ref{sec:fitting} above. Gradients are not required, only energies. Unlike trajectory-based methods, however, global surfaces are needed. A diabatic representation is required (section \ref{sec:diabatization}). While the surfaces only need to be accurately described in the region of space occupied by the wavepacket, their delocalized nature means that it is sensitive to “holes” in the potential, i.e., regions where the potential drops to large negative energies due to poor fitting. A likely problem is if sufficient data is not used when learning surfaces, particularly at the boundaries of the space to be covered.
+
+One can provide the data samples by using the surface hopping data. However, the classical nature of these trajectories may mean that they do not sample the full space needed to describe the wavepacket. Gaussian wavepacket methods, such as Multiple Spawning \cite{RN86} or vMCG \cite{RN9}, may provide the answer by collecting data along trajectories that can be related directly to the wavepacket motion. This is in particular for the case with vMCG where the trajectories are not classical and spread faster to cover the needed phase space. vMCG has been shown to provide the points for Shepard Interpolated surfaces during direct dynamics simulations \cite{RN40, RN8} and use more advanced sampling techniques in the GROW methodology \cite{RN7}. More recently, it has been used with Gaussian Process Regression to learn the potentials for MCTDH calculations \cite{RN6}. However, the latter simulations also showed the challenges as many points were required for accurate surfaces.
+
+ML techniques can take a complicated multi-dimensional potential function and put it in the form required for efficient quantum dynamics simulations. An ongoing challenge is the high computational cost of multi-dimensional integrals; the potential must be in a “sum-of-products” form. The sum-of-products formalism is written as a sum of terms comprising low-dimensional functions multiplied together. NNs are suitable for this \cite{RN5, RN4}, but have only been applied to small systems.
+
+More and more research is directed towards post-processing (section \ref{sec:postprocessing}). Unlike surface hopping, which gives easily visualizable results with chemical structures moving along trajectories, wavepackets have all the information in a complex multi-dimensional function. Extracting trajectories of molecules evolving in time across excited- and ground-state PESs would help to create unprecedented knowledge of molecular excited states. Sampling and clustering techniques (sections \ref{sec:clustering} and \ref{sec:timeclustering}) to find the significant regions are useful, but visualizing correlations is needed to demonstrate how wavepacket components evolve coherently.
+
+\subsection{Final Notes}
+
+ML for excited states is much less explored, unlike ML for ground-state molecular properties. While ML ground-state potential energy surfaces can be obtained with high accuracy, errors for fitting excited-state properties are generally higher. The benefit of ML potentials that give very low errors with respect to QM methods, as it is often discussed in ground-state simulations \cite{RN127, RN95, Schutt21, RN126, RN93}, provide record-setting timescales for NAMD simulations.
+
+A major challenge that remains to be solved is transferability. Notably, the number and character of electronic states within a certain energy range can vary dramatically even between seemingly similar molecules.5 ML offers the possibility to carry out many hundreds of NAMD trajectories that are needed to achieve statistically significant results. Therefore, active learning techniques are often indispensable when carrying out ML-driven NAMD. In addition, the high amount of data produced by ML-driven NAMD will likely require other advanced ML-based methods for postprocessing and analysis in the future. The benefit of using equivariant features in ML for fitting potential energy surfaces and properties thereof is in its infancy. Much work is still needed to push this field forward and benchmark data sets are required to allow for developing and testing new ML methods for excited states. Efforts in the future should thus be further devoted to data set creation in addition to ML development and testing. 
+
+
 
 \section*{Author Contributions}
 %%%%%%%%%%%%%%%%
@@ -605,7 +605,7 @@ Thus, ensure that the electronic structure code to be used provides all necessar
 %%%%%%%%%%%%%%%%
 
 All authors contributed to the discussion that led to this manuscript and the initial draft. 
-SAL and JW oversaw the writing and edited the manuscript. All authors were involved in the revision process. ŠS prepared the original figures. BB prepared the jupyter notebook on unsupervised learning.
+SAL and JW oversaw the writing and edited the manuscript. All authors were involved in the revision process. ŠS prepared the original figures. BB prepared the jupyter notebook on unsupervised learning. During the workshop, individual groups formed that prepared the initial draft of each section. CM, SAL, and RCO focused on section \ref{sec:preprocessing}. SM, GW, and ŠS focused on section \ref{sec:fitting} with JL support for the initial draft. BB and JW focused on section \ref{sec:postprocessing}, receiving help from MPJ. 
 % We suggest you preserve this comment:
 For a more detailed description of author contributions,
 see the GitHub issue tracking and changelog at \githubrepository.
@@ -621,7 +621,8 @@ see the GitHub issue tracking and changelog at \githubrepository.
 % more information on deciding on authorship and author order.
 %%%%%%%%%%%%%%%
 
-This work is the result of the CECAM workshop "Machine-learned potentials in molecular simulation: best practices and tutorials" of July 2023 organized by Chris Oostenbrink and JW. The authors thank all participants for fruitful discussions.
+This work is the result of the CECAM workshop "Machine-learned potentials in molecular simulation: best practices and tutorials" of July 2023 organized by Chris Oostenbrink and JW. 
+The authors thank all participants for fruitful discussions. 
 
 % We suggest you preserve this comment:
 For a more detailed description of contributions from the community and others, see the GitHub issue tracking and changelog at \githubrepository.
@@ -637,7 +638,8 @@ The authors declare no potential conflict of interest.
 %%%%%%%
 % Authors should acknowledge funding sources here. Reference specific grants.
 %%%%%%%
-CM gratefully acknowledges funding by the Alexander von Humboldt foundation within a Feodor Lynen fellowship. ŠS gratefully acknowledges the support of Czech Science Foundation, project No. 22-13489O. RCO acknowledges funding from the Leverhulme Trust Leverhulme Trust (RPG-2019-122). RCO and SAL acknowledge the Royal Society for funding through an International Exchange Grant (IES\textbackslash R2\textbackslash 222057). SAL acknowledges the National Science Foundation (NSF-CHE-2318141) for funding. MPJ acknowledges the financial support of the European Research Council (ERC) under the advanced grant SubNano (No 832237).
+%CM gratefully acknowledges funding by the Alexander von Humboldt foundation within a Feodor Lynen fellowship. 
+ŠS gratefully acknowledges the support of Czech Science Foundation, project No. 22-13489O. RCO acknowledges funding from the Leverhulme Trust Leverhulme Trust (RPG-2019-122). RCO and SAL acknowledge the Royal Society for funding through an International Exchange Grant (IES\textbackslash R2\textbackslash 222057). SAL acknowledges the National Science Foundation (NSF-CHE-2318141) for funding. MPJ acknowledges the financial support of the European Research Council (ERC) under the advanced grant SubNano (No 832237).
 
 \section*{Author Information}
 \makeorcid
